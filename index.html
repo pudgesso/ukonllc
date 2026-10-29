@@ -1,0 +1,1480 @@
+<!doctype html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Юкон — поставки химического сырья</title>
+  <meta name="description" content="Юкон (UCON LLC) — оптовые поставки химического сырья для агрохимии, косметики, фармацевтики, нефтегазовой отрасли и производства красителей. 19 200+ тонн в год." />
+  <meta name="theme-color" content="#0A0D12" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: { DEFAULT: '#0A0D12', 2: '#0E1219', 3: '#131823' },
+            cobalt: { DEFAULT: '#2563EB', soft: '#3B82F6', deep: '#1D4ED8' },
+            emer: '#10B981',
+            steel: { DEFAULT: '#8B95A7', light: '#B7C0CE', dim: '#5A6375' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+          },
+          letterSpacing: { tightest: '-0.045em' },
+        },
+      },
+    };
+  </script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #0A0D12;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.14);
+      --cobalt: #2563EB;
+      --emer: #10B981;
+    }
+    html { background: var(--bg); }
+    body {
+      background: var(--bg);
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    ::selection { background: rgba(37, 99, 235, 0.55); color: #fff; }
+
+    /* Swiss grid backdrop */
+    .grid-backdrop {
+      background-image:
+        linear-gradient(to right, var(--line) 1px, transparent 1px);
+      background-size: calc(100% / 12) 100%;
+    }
+    .hairline { border-color: var(--line) !important; }
+    .hairline-strong { border-color: var(--line-strong) !important; }
+
+    /* Noise overlay */
+    .noise::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 60;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Glass header */
+    .glass {
+      background: rgba(10, 13, 18, 0.62);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+    }
+
+    /* Spotlight cards */
+    .spot { position: relative; isolation: isolate; }
+    .spot::before {
+      content: '';
+      position: absolute; inset: 0; z-index: -1;
+      opacity: 0; transition: opacity .5s ease;
+      background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(37, 99, 235, 0.16), rgba(16, 185, 129, 0.05) 40%, transparent 65%);
+    }
+    .spot:hover::before { opacity: 1; }
+
+    .glow-text {
+      background: linear-gradient(100deg, #fff 0%, #fff 40%, #9DB8FF 70%, #6EE7B7 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .accent-grad {
+      background: linear-gradient(100deg, #3B82F6 0%, #2563EB 45%, #10B981 120%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #3170F0 0%, #2563EB 100%);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.12) inset, 0 10px 40px -12px rgba(37,99,235,.8), 0 0 24px -6px rgba(16,185,129,.35);
+      transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.2) inset, 0 16px 50px -12px rgba(37,99,235,.95), 0 0 32px -4px rgba(16,185,129,.45);
+    }
+    .btn-ghost { transition: background .3s ease, border-color .3s ease; }
+    .btn-ghost:hover { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.24); }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal[data-delay="1"] { transition-delay: .08s; }
+    .reveal[data-delay="2"] { transition-delay: .16s; }
+    .reveal[data-delay="3"] { transition-delay: .24s; }
+    .reveal[data-delay="4"] { transition-delay: .32s; }
+
+    /* Marquee */
+    .marquee { mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+    .marquee-track { animation: marquee 48s linear infinite; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    /* Pulse dot */
+    .pulse-dot { position: relative; }
+    .pulse-dot::after {
+      content: ''; position: absolute; inset: -4px; border-radius: 999px;
+      border: 1px solid var(--emer); opacity: .6; animation: ping 2.4s cubic-bezier(0,0,.2,1) infinite;
+    }
+    @keyframes ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
+
+    /* Industry rows */
+    .ind-row { transition: background .4s ease, padding .4s ease; }
+    .ind-row .ind-bar { transform: scaleX(0); transform-origin: left; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+    .ind-row.active .ind-bar, .ind-row:hover .ind-bar { transform: scaleX(1); }
+    .ind-row.active { background: linear-gradient(90deg, rgba(37,99,235,.10), transparent 70%); }
+    .ind-row .ind-arrow { transition: transform .4s ease, color .4s ease; }
+    .ind-row.active .ind-arrow, .ind-row:hover .ind-arrow { transform: translateX(4px) rotate(-45deg); color: #fff; }
+    .ind-panel-enter { animation: panelIn .55s cubic-bezier(.2,.8,.2,1); }
+    @keyframes panelIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    /* Bars chart */
+    .bar { transform: scaleY(0); transform-origin: bottom; transition: transform 1.2s cubic-bezier(.2,.8,.2,1); }
+    .in .bar { transform: scaleY(1); }
+
+    /* Form */
+    .field {
+      background: transparent;
+      border-bottom: 1px solid var(--line-strong);
+      transition: border-color .3s ease;
+    }
+    .field:focus { outline: none; border-color: var(--cobalt); }
+    .field.invalid { border-color: #EF4444; }
+    select.field option { background: #0E1219; color: #fff; }
+
+    /* Toast */
+    .toast { transform: translate(-50%, 24px); opacity: 0; pointer-events: none; transition: all .45s cubic-bezier(.2,.8,.2,1); }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+    /* Lang switch */
+    .lang-btn[aria-pressed="true"] { color: #fff; }
+    .lang-btn[aria-pressed="false"] { color: #5A6375; }
+
+    /* i18n swap fade */
+    .i18n-fade [data-i18n] { transition: opacity .18s ease; }
+    .i18n-swapping [data-i18n] { opacity: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .marquee-track { animation: none; }
+      .bar { transform: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+
+<body class="noise font-sans i18n-fade">
+
+  <!-- Fixed Swiss grid lines -->
+  <div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0">
+    <div class="mx-auto h-full max-w-[1440px] px-4 sm:px-8">
+      <div class="grid-backdrop h-full border-x hairline opacity-60"></div>
+    </div>
+  </div>
+
+  <!-- ============ HEADER ============ -->
+  <header id="header" class="glass fixed inset-x-0 top-0 z-50 border-b hairline transition-all duration-500">
+    <div class="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-4 sm:px-8">
+      <a href="#top" class="group flex items-center gap-3" aria-label="UCON LLC">
+        <span class="relative grid h-9 w-9 place-items-center border hairline-strong">
+          <svg viewBox="0 0 32 32" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M16 3 27 9.5v13L16 29 5 22.5v-13z" class="text-white/90" />
+            <path d="M11 11v6.5a5 5 0 0 0 10 0V11" class="text-cobalt-soft" />
+          </svg>
+          <span class="absolute -right-[3px] -top-[3px] h-1.5 w-1.5 rounded-full bg-emer shadow-[0_0_10px_#10B981]"></span>
+        </span>
+        <span class="font-display text-[15px] font-semibold tracking-wide">
+          ЮКОН <span class="font-mono text-steel-dim">//</span> <span class="text-steel-light">UCON LLC</span>
+        </span>
+      </a>
+
+      <nav class="hidden items-center gap-8 lg:flex" aria-label="Main">
+        <a href="#scale" class="nav-link font-mono text-[12px] uppercase tracking-[0.14em] text-steel transition-colors hover:text-white"><span class="text-steel-dim">01 </span><span data-i18n="nav.scale">Масштаб</span></a>
+        <a href="#industries" class="nav-link font-mono text-[12px] uppercase tracking-[0.14em] text-steel transition-colors hover:text-white"><span class="text-steel-dim">02 </span><span data-i18n="nav.industries">Отрасли</span></a>
+        <a href="#portfolio" class="nav-link font-mono text-[12px] uppercase tracking-[0.14em] text-steel transition-colors hover:text-white"><span class="text-steel-dim">03 </span><span data-i18n="nav.portfolio">Портфель</span></a>
+        <a href="#team" class="nav-link font-mono text-[12px] uppercase tracking-[0.14em] text-steel transition-colors hover:text-white"><span class="text-steel-dim">04 </span><span data-i18n="nav.team">Команда</span></a>
+        <a href="#contact" class="nav-link font-mono text-[12px] uppercase tracking-[0.14em] text-steel transition-colors hover:text-white"><span class="text-steel-dim">05 </span><span data-i18n="nav.contact">Контакты</span></a>
+      </nav>
+
+      <div class="flex items-center gap-3 sm:gap-5">
+        <div class="flex items-center gap-2 font-mono text-[12px] tracking-[0.12em]" role="group" aria-label="Language">
+          <button class="lang-btn transition-colors hover:text-white" data-lang="ru" aria-pressed="true">RU</button>
+          <span class="text-steel-dim">|</span>
+          <button class="lang-btn transition-colors hover:text-white" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <a href="#contact" class="btn-primary hidden items-center gap-2 px-5 py-2.5 text-[13px] font-medium sm:inline-flex">
+          <span data-i18n="cta.request">Оставить заявку</span>
+          <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+        </a>
+        <button id="menuBtn" class="grid h-10 w-10 place-items-center border hairline-strong lg:hidden" aria-label="Menu" aria-expanded="false">
+          <i data-lucide="menu" class="h-5 w-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden border-t hairline lg:hidden">
+      <nav class="mx-auto flex max-w-[1440px] flex-col px-4 py-4 sm:px-8">
+        <a href="#scale" class="m-link flex justify-between border-b hairline py-4 font-display text-xl"><span data-i18n="nav.scale">Масштаб</span><span class="font-mono text-xs text-steel-dim">01</span></a>
+        <a href="#industries" class="m-link flex justify-between border-b hairline py-4 font-display text-xl"><span data-i18n="nav.industries">Отрасли</span><span class="font-mono text-xs text-steel-dim">02</span></a>
+        <a href="#portfolio" class="m-link flex justify-between border-b hairline py-4 font-display text-xl"><span data-i18n="nav.portfolio">Портфель</span><span class="font-mono text-xs text-steel-dim">03</span></a>
+        <a href="#team" class="m-link flex justify-between border-b hairline py-4 font-display text-xl"><span data-i18n="nav.team">Команда</span><span class="font-mono text-xs text-steel-dim">04</span></a>
+        <a href="#contact" class="m-link flex justify-between py-4 font-display text-xl"><span data-i18n="nav.contact">Контакты</span><span class="font-mono text-xs text-steel-dim">05</span></a>
+        <a href="#contact" class="m-link btn-primary mt-3 inline-flex items-center justify-center gap-2 px-5 py-3.5 text-sm font-medium"><span data-i18n="cta.request">Оставить заявку</span><i data-lucide="arrow-up-right" class="h-4 w-4"></i></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="relative z-10">
+
+    <!-- ============ HERO ============ -->
+    <section class="relative flex min-h-[100svh] flex-col overflow-hidden pt-[72px]">
+      <canvas id="molecules" aria-hidden="true" class="absolute inset-0 h-full w-full"></canvas>
+      <div aria-hidden="true" class="pointer-events-none absolute -right-40 top-10 h-[640px] w-[640px] rounded-full bg-cobalt/20 blur-[140px]"></div>
+      <div aria-hidden="true" class="pointer-events-none absolute -left-40 bottom-0 h-[420px] w-[420px] rounded-full bg-emer/10 blur-[140px]"></div>
+      <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-ink to-transparent"></div>
+
+      <div class="relative mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-4 sm:px-8">
+        <!-- meta row -->
+        <div class="reveal flex flex-wrap items-center justify-between gap-4 border-b hairline py-5 font-mono text-[11px] uppercase tracking-[0.18em] text-steel">
+          <span class="flex items-center gap-3"><span class="pulse-dot h-1.5 w-1.5 rounded-full bg-emer"></span><span data-i18n="hero.meta1">Поставки активны · 2026</span></span>
+          <span class="hidden md:inline" data-i18n="hero.meta2">[00] B2B · Химическое сырьё · Опт</span>
+          <span class="hidden sm:inline">C₃H₈O₃ · NaOH · H₂SO₄ · TiO₂</span>
+        </div>
+
+        <div class="grid flex-1 grid-cols-12 items-center gap-x-6 py-16 md:py-20">
+          <div class="col-span-12 lg:col-span-10">
+            <p class="reveal mb-8 inline-flex items-center gap-3 border hairline-strong bg-white/[0.02] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-steel-light" data-delay="1">
+              <i data-lucide="flask-conical" class="h-3.5 w-3.5 text-cobalt-soft"></i>
+              <span data-i18n="hero.badge">Оптовые поставки для промышленности</span>
+            </p>
+            <h1 class="reveal font-display text-[clamp(2.6rem,7.2vw,7.25rem)] font-medium leading-[0.95] tracking-tightest" data-delay="2">
+              <span data-i18n="hero.title1">Химическое сырьё</span><br />
+              <span class="glow-text" data-i18n="hero.title2">в масштабе индустрии.</span>
+            </h1>
+            <p class="reveal mt-8 max-w-2xl text-[17px] leading-relaxed text-steel md:text-lg" data-delay="3" data-i18n="hero.lead">
+              Юкон обеспечивает производства стабильными поставками сырья — от спецификации до склада клиента. Прямые контракты с производителями, полный пакет документов и логистика, рассчитанная на непрерывный цикл.
+            </p>
+            <div class="reveal mt-10 flex flex-col gap-3 sm:flex-row" data-delay="4">
+              <a href="#contact" data-prefill="spec" class="btn-primary inline-flex items-center justify-center gap-3 px-7 py-4 text-[15px] font-medium">
+                <i data-lucide="file-text" class="h-4 w-4"></i>
+                <span data-i18n="hero.cta1">Запросить спецификацию</span>
+              </a>
+              <a href="#industries" class="btn-ghost inline-flex items-center justify-center gap-3 border hairline-strong px-7 py-4 text-[15px] font-medium">
+                <span data-i18n="hero.cta2">Отрасли</span>
+                <i data-lucide="arrow-down-right" class="h-4 w-4"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- hero footer stats -->
+        <div class="reveal grid grid-cols-2 border-t hairline md:grid-cols-4" data-delay="2">
+          <div class="border-r hairline py-6 pr-4">
+            <div class="font-mono text-2xl text-white md:text-3xl">19 200+</div>
+            <div class="mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-steel-dim" data-i18n="hero.s1">тонн в год</div>
+          </div>
+          <div class="py-6 pl-4 md:border-r md:hairline md:pr-4">
+            <div class="font-mono text-2xl text-white md:text-3xl">35+</div>
+            <div class="mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-steel-dim" data-i18n="hero.s2">продуктовых направлений</div>
+          </div>
+          <div class="border-r border-t hairline py-6 pr-4 md:border-t-0 md:pl-4">
+            <div class="font-mono text-2xl text-white md:text-3xl">05</div>
+            <div class="mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-steel-dim" data-i18n="hero.s3">ключевых отраслей</div>
+          </div>
+          <div class="border-t hairline py-6 pl-4 md:border-t-0">
+            <div class="font-mono text-2xl text-white md:text-3xl">100+</div>
+            <div class="mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-steel-dim" data-i18n="hero.s4">экспертов в команде</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="relative border-y hairline bg-ink-2/60 py-5">
+      <div class="marquee overflow-hidden">
+        <div class="marquee-track flex w-max gap-12 whitespace-nowrap font-mono text-[12px] uppercase tracking-[0.2em] text-steel-dim" id="marqueeTrack"></div>
+      </div>
+    </div>
+
+    <!-- ============ [01] SCALE / BENTO ============ -->
+    <section id="scale" class="relative scroll-mt-[72px]">
+      <div class="mx-auto max-w-[1440px] px-4 py-24 sm:px-8 md:py-32">
+        <div class="mb-14 grid grid-cols-12 gap-6">
+          <div class="reveal col-span-12 font-mono text-[12px] uppercase tracking-[0.18em] text-steel md:col-span-3">
+            <span class="text-cobalt-soft">[01]</span> <span data-i18n="scale.kicker">Масштаб в цифрах</span>
+          </div>
+          <div class="col-span-12 md:col-span-9">
+            <h2 class="reveal font-display text-[clamp(2rem,4.4vw,4rem)] font-medium leading-[1.02] tracking-tightest" data-i18n="scale.title">Объёмы, на которые<br />можно опереться.</h2>
+            <p class="reveal mt-6 max-w-2xl text-lg leading-relaxed text-steel" data-delay="1" data-i18n="scale.lead">Мы строим поставки так, чтобы планирование вашего производства не зависело от рынка: стабильный ежемесячный объём, резервы на складах и альтернативные цепочки по ключевым позициям.</p>
+          </div>
+        </div>
+
+        <!-- Bento -->
+        <div class="grid grid-cols-1 gap-px border hairline bg-white/[0.08] md:grid-cols-6 lg:grid-cols-12">
+          <!-- Big tonnage card -->
+          <article class="spot reveal relative overflow-hidden bg-ink p-7 md:col-span-6 md:p-10 lg:col-span-7 lg:row-span-2">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">A.01 / <span data-i18n="bento.volume">Годовой объём</span></span>
+              <i data-lucide="container" class="h-5 w-5 text-steel"></i>
+            </div>
+            <div class="mt-16 md:mt-24">
+              <div class="flex items-end gap-3">
+                <span class="font-mono text-[clamp(3.5rem,9vw,8.5rem)] font-medium leading-none tracking-tighter text-white" data-count="19200" data-format="space">0</span>
+                <span class="mb-3 font-mono text-3xl text-cobalt-soft md:mb-5 md:text-5xl">+</span>
+              </div>
+              <p class="mt-4 font-display text-2xl font-medium md:text-3xl" data-i18n="bento.tonsTitle">тонн химического сырья в год</p>
+              <p class="mt-3 max-w-md text-steel" data-i18n="bento.tonsText">Около 1 600 тонн ежемесячно — ритмичные отгрузки под производственные планы клиентов, без сезонных провалов.</p>
+            </div>
+            <!-- monthly bars -->
+            <div class="mt-12">
+              <div class="flex h-28 items-end gap-1.5 md:gap-2" id="bars"></div>
+              <div class="mt-3 flex justify-between border-t hairline pt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-steel-dim">
+                <span data-i18n="bento.jan">Янв</span><span data-i18n="bento.avg">≈ 1 600 т / мес</span><span data-i18n="bento.dec">Дек</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 35+ -->
+          <article class="spot reveal bg-ink p-7 md:col-span-3 md:p-8 lg:col-span-5" data-delay="1">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">A.02 / <span data-i18n="bento.portfolio">Портфель</span></span>
+              <i data-lucide="layers" class="h-5 w-5 text-steel"></i>
+            </div>
+            <div class="mt-10 flex items-end gap-2">
+              <span class="font-mono text-7xl font-medium leading-none" data-count="35">0</span>
+              <span class="mb-1 font-mono text-3xl text-cobalt-soft">+</span>
+            </div>
+            <p class="mt-4 font-display text-xl font-medium" data-i18n="bento.catTitle">продуктовых направлений</p>
+            <p class="mt-2 text-sm leading-relaxed text-steel" data-i18n="bento.catText">ПАВ, растворители, полимеры, пигменты, фармсубстанции, реагенты — единое окно закупки вместо десятка поставщиков.</p>
+          </article>
+
+          <!-- Geography -->
+          <article class="spot reveal relative overflow-hidden bg-ink p-7 md:col-span-3 md:p-8 lg:col-span-5" data-delay="2">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">A.03 / <span data-i18n="bento.geo">География</span></span>
+              <i data-lucide="globe-2" class="h-5 w-5 text-steel"></i>
+            </div>
+            <svg viewBox="0 0 320 120" class="mt-6 h-28 w-full" aria-hidden="true">
+              <defs>
+                <linearGradient id="routeGrad" x1="0" x2="1">
+                  <stop offset="0" stop-color="#2563EB" stop-opacity=".1" />
+                  <stop offset=".5" stop-color="#3B82F6" />
+                  <stop offset="1" stop-color="#10B981" />
+                </linearGradient>
+              </defs>
+              <g fill="rgba(255,255,255,.12)" id="dotmap"></g>
+              <path d="M40 92 Q 120 10 205 52" fill="none" stroke="url(#routeGrad)" stroke-width="1.2" stroke-dasharray="3 4" />
+              <path d="M78 30 Q 150 0 205 52" fill="none" stroke="url(#routeGrad)" stroke-width="1.2" stroke-dasharray="3 4" />
+              <path d="M290 78 Q 250 40 205 52" fill="none" stroke="url(#routeGrad)" stroke-width="1.2" stroke-dasharray="3 4" />
+              <circle cx="205" cy="52" r="4" fill="#10B981" />
+              <circle cx="205" cy="52" r="10" fill="none" stroke="#10B981" stroke-opacity=".4" />
+              <circle cx="40" cy="92" r="2.5" fill="#3B82F6" />
+              <circle cx="78" cy="30" r="2.5" fill="#3B82F6" />
+              <circle cx="290" cy="78" r="2.5" fill="#3B82F6" />
+            </svg>
+            <p class="mt-4 font-display text-xl font-medium" data-i18n="bento.geoTitle">Мировые производители → ваш склад</p>
+            <p class="mt-2 text-sm leading-relaxed text-steel" data-i18n="bento.geoText">Сырьё из Азии, Европы и Ближнего Востока. Доставка по России и странам ЕАЭС — морем, ж/д и автотранспортом.</p>
+          </article>
+
+          <!-- Team -->
+          <article class="spot reveal bg-ink p-7 md:col-span-2 md:p-8 lg:col-span-4" data-delay="1">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">A.04 / <span data-i18n="bento.team">Команда</span></span>
+              <i data-lucide="users" class="h-5 w-5 text-steel"></i>
+            </div>
+            <div class="mt-10 flex items-end gap-2">
+              <span class="font-mono text-6xl font-medium leading-none" data-count="100">0</span>
+              <span class="mb-1 font-mono text-2xl text-cobalt-soft">+</span>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed text-steel" data-i18n="bento.teamText">специалистов: менеджеры по продукту, ВЭД, логистика, контроль качества.</p>
+          </article>
+
+          <!-- Industries count -->
+          <article class="spot reveal bg-ink p-7 md:col-span-2 md:p-8 lg:col-span-4" data-delay="2">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">A.05 / <span data-i18n="bento.sectors">Отрасли</span></span>
+              <i data-lucide="factory" class="h-5 w-5 text-steel"></i>
+            </div>
+            <div class="mt-10 font-mono text-6xl font-medium leading-none">05</div>
+            <p class="mt-4 text-sm leading-relaxed text-steel" data-i18n="bento.sectorsText">ключевых индустрий — от агрохимии до нефтегазового сектора.</p>
+          </article>
+
+          <!-- Reliability -->
+          <article class="spot reveal relative overflow-hidden bg-ink p-7 md:col-span-2 md:p-8 lg:col-span-4" data-delay="3">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">A.06 / <span data-i18n="bento.contracts">Контракты</span></span>
+              <i data-lucide="shield-check" class="h-5 w-5 text-emer"></i>
+            </div>
+            <div class="mt-10 font-display text-3xl font-medium leading-tight" data-i18n="bento.directTitle">Прямые<br />контракты</div>
+            <p class="mt-4 text-sm leading-relaxed text-steel" data-i18n="bento.directText">Работаем напрямую с заводами-изготовителями: прозрачная цена и прослеживаемость каждой партии.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ [02] INDUSTRIES ============ -->
+    <section id="industries" class="relative scroll-mt-[72px] border-t hairline">
+      <div class="mx-auto max-w-[1440px] px-4 py-24 sm:px-8 md:py-32">
+        <div class="mb-14 grid grid-cols-12 gap-6">
+          <div class="reveal col-span-12 font-mono text-[12px] uppercase tracking-[0.18em] text-steel md:col-span-3">
+            <span class="text-cobalt-soft">[02]</span> <span data-i18n="ind.kicker">Отраслевые решения</span>
+          </div>
+          <div class="col-span-12 md:col-span-9">
+            <h2 class="reveal font-display text-[clamp(2rem,4.4vw,4rem)] font-medium leading-[1.02] tracking-tightest" data-i18n="ind.title">Пять индустрий.<br />Пять разных стандартов.</h2>
+            <p class="reveal mt-6 max-w-2xl text-lg leading-relaxed text-steel" data-delay="1" data-i18n="ind.lead">Каждая отрасль предъявляет свои требования к чистоте, документации и логистике. Мы знаем их изнутри — и подбираем сырьё под технологический процесс, а не просто под артикул.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-px border hairline bg-white/[0.08]">
+          <!-- list -->
+          <div class="col-span-12 bg-ink lg:col-span-7" role="tablist" aria-label="Industries" id="indList"></div>
+          <!-- detail panel -->
+          <div class="col-span-12 bg-ink lg:col-span-5">
+            <div class="lg:sticky lg:top-[96px]">
+              <div id="indPanel" class="relative overflow-hidden p-7 md:p-10" role="tabpanel" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ [03] PORTFOLIO ============ -->
+    <section id="portfolio" class="relative scroll-mt-[72px] border-t hairline">
+      <div class="mx-auto max-w-[1440px] px-4 py-24 sm:px-8 md:py-32">
+        <div class="mb-14 grid grid-cols-12 gap-6">
+          <div class="reveal col-span-12 font-mono text-[12px] uppercase tracking-[0.18em] text-steel md:col-span-3">
+            <span class="text-cobalt-soft">[03]</span> <span data-i18n="pf.kicker">Продуктовый портфель</span>
+          </div>
+          <div class="col-span-12 md:col-span-9">
+            <h2 class="reveal font-display text-[clamp(2rem,4.4vw,4rem)] font-medium leading-[1.02] tracking-tightest" data-i18n="pf.title">35+ направлений.<br /><span class='text-steel'>Один ответственный партнёр.</span></h2>
+            <p class="reveal mt-6 max-w-2xl text-lg leading-relaxed text-steel" data-delay="1" data-i18n="pf.lead">Консолидируем закупки сырья в одном контракте: меньше поставщиков, меньше рисков, единые стандарты качества и документооборота.</p>
+          </div>
+        </div>
+
+        <!-- categories -->
+        <div class="reveal mb-16 flex flex-wrap gap-2" id="catTags"></div>
+
+        <!-- pillars -->
+        <div class="grid grid-cols-1 gap-px border hairline bg-white/[0.08] md:grid-cols-2 lg:grid-cols-4">
+          <article class="spot reveal group bg-ink p-7 md:p-8">
+            <div class="flex items-center justify-between">
+              <span class="grid h-11 w-11 place-items-center border hairline-strong transition-colors group-hover:border-cobalt"><i data-lucide="microscope" class="h-5 w-5 text-cobalt-soft"></i></span>
+              <span class="font-mono text-[11px] text-steel-dim">P.01</span>
+            </div>
+            <h3 class="mt-10 font-display text-xl font-medium" data-i18n="pf.p1t">Контроль качества</h3>
+            <p class="mt-3 text-sm leading-relaxed text-steel" data-i18n="pf.p1d">Входной контроль каждой партии, сертификаты анализа (COA), паспорта безопасности (SDS) и арбитражные пробы. Соответствие ГОСТ, ТУ и международным фармакопеям.</p>
+          </article>
+          <article class="spot reveal group bg-ink p-7 md:p-8" data-delay="1">
+            <div class="flex items-center justify-between">
+              <span class="grid h-11 w-11 place-items-center border hairline-strong transition-colors group-hover:border-cobalt"><i data-lucide="truck" class="h-5 w-5 text-cobalt-soft"></i></span>
+              <span class="font-mono text-[11px] text-steel-dim">P.02</span>
+            </div>
+            <h3 class="mt-10 font-display text-xl font-medium" data-i18n="pf.p2t">Логистика</h3>
+            <p class="mt-3 text-sm leading-relaxed text-steel" data-i18n="pf.p2d">Мультимодальные маршруты, складские резервы и доставка до площадки клиента. Работаем с опасными грузами (ADR / IMDG) и температурным режимом.</p>
+          </article>
+          <article class="spot reveal group bg-ink p-7 md:p-8" data-delay="2">
+            <div class="flex items-center justify-between">
+              <span class="grid h-11 w-11 place-items-center border hairline-strong transition-colors group-hover:border-cobalt"><i data-lucide="handshake" class="h-5 w-5 text-cobalt-soft"></i></span>
+              <span class="font-mono text-[11px] text-steel-dim">P.03</span>
+            </div>
+            <h3 class="mt-10 font-display text-xl font-medium" data-i18n="pf.p3t">Прямые контракты</h3>
+            <p class="mt-3 text-sm leading-relaxed text-steel" data-i18n="pf.p3d">Долгосрочные соглашения с мировыми производителями. Без цепочек посредников — с прогнозируемой ценой и приоритетом в распределении объёмов.</p>
+          </article>
+          <article class="spot reveal group bg-ink p-7 md:p-8" data-delay="3">
+            <div class="flex items-center justify-between">
+              <span class="grid h-11 w-11 place-items-center border hairline-strong transition-colors group-hover:border-cobalt"><i data-lucide="file-check-2" class="h-5 w-5 text-cobalt-soft"></i></span>
+              <span class="font-mono text-[11px] text-steel-dim">P.04</span>
+            </div>
+            <h3 class="mt-10 font-display text-xl font-medium" data-i18n="pf.p4t">ВЭД и документы</h3>
+            <p class="mt-3 text-sm leading-relaxed text-steel" data-i18n="pf.p4d">Таможенное оформление, сертификация и регистрация продукции — берём на себя. Клиент получает сырьё с полным комплектом документов.</p>
+          </article>
+        </div>
+
+        <!-- process -->
+        <div class="reveal mt-16 border hairline">
+          <div class="flex items-center justify-between border-b hairline px-6 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim md:px-8">
+            <span data-i18n="pf.processTitle">Цикл поставки</span>
+            <span>STEP 01 → 05</span>
+          </div>
+          <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5" id="process"></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ [04] TEAM / HR ============ -->
+    <section id="team" class="relative scroll-mt-[72px] overflow-hidden border-t hairline">
+      <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-0 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-cobalt/10 blur-[160px]"></div>
+      <div class="relative mx-auto max-w-[1440px] px-4 py-24 sm:px-8 md:py-32">
+        <div class="mb-16 grid grid-cols-12 gap-6">
+          <div class="reveal col-span-12 font-mono text-[12px] uppercase tracking-[0.18em] text-steel md:col-span-3">
+            <span class="text-cobalt-soft">[04]</span> <span data-i18n="team.kicker">Команда и культура</span>
+          </div>
+          <div class="col-span-12 md:col-span-9">
+            <h2 class="reveal font-display text-[clamp(2.4rem,6vw,6rem)] font-medium leading-[0.98] tracking-tightest">
+              <span data-i18n="team.title1">Главный реагент —</span><br />
+              <span class="accent-grad" data-i18n="team.title2">люди.</span>
+            </h2>
+            <p class="reveal mt-8 max-w-2xl text-lg leading-relaxed text-steel" data-delay="1" data-i18n="team.lead">За каждой тонной сырья стоит работа более 100 профессионалов. Именно команда превращает сложные международные цепочки в предсказуемый сервис для клиента.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-px border hairline bg-white/[0.08]">
+          <!-- big number -->
+          <div class="spot reveal relative col-span-12 overflow-hidden bg-ink p-8 md:p-12 lg:col-span-5">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">T.00 / <span data-i18n="team.headcount">Численность</span></span>
+            <div class="mt-12 flex items-end gap-2">
+              <span class="font-mono text-[clamp(5rem,12vw,10rem)] font-medium leading-none tracking-tighter" data-count="100">0</span>
+              <span class="mb-4 font-mono text-5xl text-emer">+</span>
+            </div>
+            <p class="mt-6 max-w-sm font-display text-2xl font-medium leading-snug" data-i18n="team.bigText">высококвалифицированных сотрудников в штате</p>
+            <!-- people grid -->
+            <div class="mt-10 grid grid-cols-[repeat(20,minmax(0,1fr))] gap-1.5" id="peopleGrid" aria-hidden="true"></div>
+          </div>
+
+          <!-- roles -->
+          <div class="col-span-12 bg-ink lg:col-span-7">
+            <div class="grid h-full grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2" id="roles"></div>
+          </div>
+        </div>
+
+        <!-- values -->
+        <div class="mt-px grid grid-cols-1 gap-px border-x border-b hairline bg-white/[0.08] md:grid-cols-2 lg:grid-cols-4" id="values"></div>
+
+        <!-- careers -->
+        <div class="reveal mt-16 flex flex-col items-start justify-between gap-8 border hairline bg-gradient-to-r from-cobalt/[0.12] via-transparent to-emer/[0.06] p-8 md:flex-row md:items-center md:p-12">
+          <div>
+            <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-emer" data-i18n="team.careersKicker">Карьера в Юкон</div>
+            <h3 class="mt-3 max-w-2xl font-display text-3xl font-medium leading-tight md:text-4xl" data-i18n="team.careersTitle">Мы открыты к сильным специалистам.</h3>
+            <p class="mt-3 max-w-2xl text-steel" data-i18n="team.careersText">Ищем менеджеров по продукту, специалистов ВЭД, логистов и химиков-технологов, которые хотят работать с масштабом и отвечать за результат.</p>
+          </div>
+          <a id="careersLink" href="mailto:office@uconllc.ru?subject=%D0%A0%D0%B5%D0%B7%D1%8E%D0%BC%D0%B5" class="btn-ghost inline-flex shrink-0 items-center gap-3 border hairline-strong px-7 py-4 text-[15px] font-medium">
+            <span data-i18n="team.careersCta">Отправить резюме</span>
+            <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ [05] CONTACT ============ -->
+    <section id="contact" class="relative scroll-mt-[72px] border-t hairline">
+      <div class="mx-auto max-w-[1440px] px-4 py-24 sm:px-8 md:py-32">
+        <div class="reveal mb-10 font-mono text-[12px] uppercase tracking-[0.18em] text-steel">
+          <span class="text-cobalt-soft">[05]</span> <span data-i18n="ct.kicker">Контакты</span>
+        </div>
+
+        <h2 class="reveal max-w-5xl font-display text-[clamp(2rem,4.4vw,4rem)] font-medium leading-[1.02] tracking-tightest" data-i18n="ct.title">Обсудим вашу потребность в сырье.</h2>
+
+        <!-- Big email -->
+        <button id="copyEmail" type="button" class="spot reveal group mt-12 flex w-full flex-col gap-6 border hairline p-6 text-left transition-colors hover:border-white/20 md:flex-row md:items-center md:justify-between md:p-10" aria-label="Copy email">
+          <span class="break-all font-display text-[clamp(1.75rem,6.4vw,6rem)] font-medium leading-none tracking-tightest transition-colors group-hover:text-cobalt-soft">office@uconllc.ru</span>
+          <span class="inline-flex shrink-0 items-center gap-3 font-mono text-[12px] uppercase tracking-[0.16em] text-steel group-hover:text-white">
+            <span class="grid h-12 w-12 place-items-center border hairline-strong transition-colors group-hover:border-cobalt group-hover:bg-cobalt"><i data-lucide="copy" class="h-5 w-5"></i></span>
+            <span data-i18n="ct.copy">Нажмите, чтобы скопировать</span>
+          </span>
+        </button>
+
+        <div class="mt-px grid grid-cols-12 gap-px border-x border-b hairline bg-white/[0.08]">
+          <!-- info -->
+          <aside class="reveal col-span-12 flex flex-col justify-between gap-12 bg-ink p-7 md:p-10 lg:col-span-4">
+            <div class="space-y-8">
+              <div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim" data-i18n="ct.responseL">Время ответа</div>
+                <div class="mt-2 font-display text-2xl font-medium" data-i18n="ct.responseV">В течение рабочего дня</div>
+              </div>
+              <div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim" data-i18n="ct.formatL">Формат работы</div>
+                <div class="mt-2 font-display text-2xl font-medium" data-i18n="ct.formatV">B2B · опт · долгосрочные контракты</div>
+              </div>
+              <div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim" data-i18n="ct.prepL">Для быстрого расчёта укажите</div>
+                <ul class="mt-3 space-y-2 text-steel">
+                  <li class="flex gap-3"><span class="font-mono text-cobalt-soft">—</span><span data-i18n="ct.prep1">наименование и CAS-номер</span></li>
+                  <li class="flex gap-3"><span class="font-mono text-cobalt-soft">—</span><span data-i18n="ct.prep2">требуемую спецификацию / марку</span></li>
+                  <li class="flex gap-3"><span class="font-mono text-cobalt-soft">—</span><span data-i18n="ct.prep3">объём и периодичность поставок</span></li>
+                  <li class="flex gap-3"><span class="font-mono text-cobalt-soft">—</span><span data-i18n="ct.prep4">город доставки</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-steel-dim">
+              <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-emer"></span>
+              <span data-i18n="ct.online">Отдел продаж на связи</span>
+            </div>
+          </aside>
+
+          <!-- form -->
+          <form id="leadForm" class="reveal col-span-12 bg-ink p-7 md:p-10 lg:col-span-8" novalidate data-delay="1">
+            <div class="mb-10 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">
+              <span data-i18n="ct.formTitle">Заявка для B2B</span>
+              <span>FORM / RFQ</span>
+            </div>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2">
+              <label class="block">
+                <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-steel" data-i18n="ct.name">Имя *</span>
+                <input name="name" required autocomplete="name" class="field mt-3 w-full py-3 text-lg text-white placeholder:text-steel-dim" data-i18n-ph="ct.namePh" placeholder="Как к вам обращаться" />
+              </label>
+              <label class="block">
+                <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-steel" data-i18n="ct.company">Компания *</span>
+                <input name="company" required autocomplete="organization" class="field mt-3 w-full py-3 text-lg text-white placeholder:text-steel-dim" data-i18n-ph="ct.companyPh" placeholder="Название и ИНН" />
+              </label>
+              <label class="block">
+                <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-steel" data-i18n="ct.email">E-mail *</span>
+                <input name="email" type="email" required autocomplete="email" class="field mt-3 w-full py-3 text-lg text-white placeholder:text-steel-dim" placeholder="name@company.com" />
+              </label>
+              <label class="block">
+                <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-steel" data-i18n="ct.industry">Отрасль *</span>
+                <div class="relative">
+                  <select name="industry" required class="field mt-3 w-full appearance-none py-3 pr-8 text-lg text-white">
+                    <option value="" data-i18n="ct.select">Выберите отрасль</option>
+                    <option value="agro" data-i18n="ind.agro">Агрохимия</option>
+                    <option value="cosmetics" data-i18n="ind.cosm">Косметика и бытовая химия</option>
+                    <option value="pharma" data-i18n="ind.pharma">Фармацевтика</option>
+                    <option value="oilgas" data-i18n="ind.oil">Нефтегазовая отрасль</option>
+                    <option value="dyes" data-i18n="ind.dyes">Красители и пигменты</option>
+                    <option value="other" data-i18n="ct.other">Другое</option>
+                  </select>
+                  <i data-lucide="chevron-down" class="pointer-events-none absolute right-0 top-1/2 mt-1.5 h-4 w-4 -translate-y-1/2 text-steel"></i>
+                </div>
+              </label>
+              <label class="block md:col-span-2">
+                <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-steel" data-i18n="ct.message">Сообщение</span>
+                <textarea name="message" rows="3" class="field mt-3 w-full resize-none py-3 text-lg text-white placeholder:text-steel-dim" data-i18n-ph="ct.messagePh" placeholder="Продукт, CAS, объём, периодичность, город доставки"></textarea>
+              </label>
+            </div>
+            <div class="mt-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+              <p class="max-w-sm text-xs leading-relaxed text-steel-dim" data-i18n="ct.consent">Отправляя заявку, вы соглашаетесь на обработку персональных данных в целях подготовки коммерческого предложения.</p>
+              <button type="submit" class="btn-primary inline-flex w-full items-center justify-center gap-3 px-8 py-4 text-[15px] font-medium sm:w-auto">
+                <span data-i18n="ct.submit">Отправить заявку</span>
+                <i data-lucide="send" class="h-4 w-4"></i>
+              </button>
+            </div>
+            <p id="formStatus" class="mt-6 hidden items-center gap-3 border border-emer/30 bg-emer/[0.06] px-4 py-3 text-sm text-emerald-200" role="status">
+              <i data-lucide="check-circle-2" class="h-4 w-4 text-emer"></i>
+              <span data-i18n="ct.success">Спасибо! Заявка сформирована — менеджер свяжется с вами в течение рабочего дня.</span>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="relative z-10 border-t hairline">
+    <div class="mx-auto max-w-[1440px] px-4 sm:px-8">
+      <div class="grid grid-cols-12 gap-6 py-16">
+        <div class="col-span-12 md:col-span-5">
+          <div class="font-display text-2xl font-semibold tracking-wide">ЮКОН <span class="font-mono text-steel-dim">//</span> <span class="text-steel-light">UCON LLC</span></div>
+          <p class="mt-4 max-w-sm text-sm leading-relaxed text-steel" data-i18n="ft.about">Оптовая торговля и поставки химического сырья для промышленных предприятий.</p>
+        </div>
+        <div class="col-span-6 md:col-span-3">
+          <div class="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim" data-i18n="ft.nav">Навигация</div>
+          <ul class="space-y-2 text-sm text-steel">
+            <li><a class="transition-colors hover:text-white" href="#scale" data-i18n="nav.scale">Масштаб</a></li>
+            <li><a class="transition-colors hover:text-white" href="#industries" data-i18n="nav.industries">Отрасли</a></li>
+            <li><a class="transition-colors hover:text-white" href="#portfolio" data-i18n="nav.portfolio">Портфель</a></li>
+            <li><a class="transition-colors hover:text-white" href="#team" data-i18n="nav.team">Команда</a></li>
+          </ul>
+        </div>
+        <div class="col-span-6 md:col-span-4">
+          <div class="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim" data-i18n="ft.contact">Связь</div>
+          <button type="button" class="copy-email text-sm text-white transition-colors hover:text-cobalt-soft">office@uconllc.ru</button>
+          <div class="mt-6">
+            <a href="#top" class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-steel transition-colors hover:text-white"><span data-i18n="ft.top">Наверх</span> <i data-lucide="arrow-up" class="h-3.5 w-3.5"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col justify-between gap-3 border-t hairline py-6 font-mono text-[11px] uppercase tracking-[0.14em] text-steel-dim md:flex-row">
+        <span>© <span id="year">2026</span> <span data-i18n="ft.legal">ООО «Юкон»</span>. <span data-i18n="ft.rights">Все права защищены.</span></span>
+        <span data-i18n="ft.offer">Информация на сайте не является публичной офертой</span>
+      </div>
+    </div>
+    <!-- Giant wordmark -->
+    <div aria-hidden="true" class="overflow-hidden border-t hairline">
+      <div class="mx-auto max-w-[1440px] select-none px-4 sm:px-8">
+        <div class="translate-y-[18%] font-display text-[22vw] font-semibold leading-none tracking-tightest text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.09)] xl:text-[300px]">UCON</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" class="toast fixed bottom-8 left-1/2 z-[70] flex items-center gap-3 border border-emer/40 bg-ink-2/90 px-5 py-3 font-mono text-[12px] uppercase tracking-[0.16em] text-white shadow-[0_20px_60px_-20px_rgba(16,185,129,.6)] backdrop-blur-xl" role="status" aria-live="polite">
+    <i data-lucide="check" class="h-4 w-4 text-emer"></i>
+    <span id="toastText">Скопировано</span>
+  </div>
+
+  <script>
+  (() => {
+    'use strict';
+
+    const EMAIL = 'office@uconllc.ru';
+    // Set to a real endpoint (e.g. a CRM webhook) to POST leads; when empty, the form opens a prefilled e-mail.
+    const FORM_ENDPOINT = '';
+
+    /* ---------------- Translations ---------------- */
+    const I18N = {
+      ru: {
+        'meta.title': 'Юкон — поставки химического сырья',
+        'nav.scale': 'Масштаб', 'nav.industries': 'Отрасли', 'nav.portfolio': 'Портфель', 'nav.team': 'Команда', 'nav.contact': 'Контакты',
+        'cta.request': 'Оставить заявку',
+
+        'hero.meta1': 'Поставки активны · 2026',
+        'hero.meta2': '[00] B2B · Химическое сырьё · Опт',
+        'hero.badge': 'Оптовые поставки для промышленности',
+        'hero.title1': 'Химическое сырьё',
+        'hero.title2': 'в масштабе индустрии.',
+        'hero.lead': 'Юкон обеспечивает производства стабильными поставками сырья — от спецификации до склада клиента. Прямые контракты с производителями, полный пакет документов и логистика, рассчитанная на непрерывный цикл.',
+        'hero.cta1': 'Запросить спецификацию',
+        'hero.cta2': 'Отрасли',
+        'hero.s1': 'тонн в год', 'hero.s2': 'продуктовых направлений', 'hero.s3': 'ключевых отраслей', 'hero.s4': 'экспертов в команде',
+
+        'scale.kicker': 'Масштаб в цифрах',
+        'scale.title': 'Объёмы, на которые<br />можно опереться.',
+        'scale.lead': 'Мы строим поставки так, чтобы планирование вашего производства не зависело от рынка: стабильный ежемесячный объём, резервы на складах и альтернативные цепочки по ключевым позициям.',
+        'bento.volume': 'Годовой объём',
+        'bento.tonsTitle': 'тонн химического сырья в год',
+        'bento.tonsText': 'Около 1 600 тонн ежемесячно — ритмичные отгрузки под производственные планы клиентов, без сезонных провалов.',
+        'bento.jan': 'Янв', 'bento.dec': 'Дек', 'bento.avg': '≈ 1 600 т / мес',
+        'bento.portfolio': 'Портфель',
+        'bento.catTitle': 'продуктовых направлений',
+        'bento.catText': 'ПАВ, растворители, полимеры, пигменты, фармсубстанции, реагенты — единое окно закупки вместо десятка поставщиков.',
+        'bento.geo': 'География',
+        'bento.geoTitle': 'Мировые производители → ваш склад',
+        'bento.geoText': 'Сырьё из Азии, Европы и Ближнего Востока. Доставка по России и странам ЕАЭС — морем, ж/д и автотранспортом.',
+        'bento.team': 'Команда',
+        'bento.teamText': 'специалистов: менеджеры по продукту, ВЭД, логистика, контроль качества.',
+        'bento.sectors': 'Отрасли',
+        'bento.sectorsText': 'ключевых индустрий — от агрохимии до нефтегазового сектора.',
+        'bento.contracts': 'Контракты',
+        'bento.directTitle': 'Прямые<br />контракты',
+        'bento.directText': 'Работаем напрямую с заводами-изготовителями: прозрачная цена и прослеживаемость каждой партии.',
+
+        'ind.kicker': 'Отраслевые решения',
+        'ind.title': 'Пять индустрий.<br />Пять разных стандартов.',
+        'ind.lead': 'Каждая отрасль предъявляет свои требования к чистоте, документации и логистике. Мы знаем их изнутри — и подбираем сырьё под технологический процесс, а не просто под артикул.',
+        'ind.agro': 'Агрохимия', 'ind.cosm': 'Косметика и бытовая химия', 'ind.pharma': 'Фармацевтика', 'ind.oil': 'Нефтегазовая отрасль', 'ind.dyes': 'Красители и пигменты',
+        'ind.materials': 'Ключевые группы сырья',
+        'ind.focus': 'Фокус',
+        'ind.cta': 'Запросить предложение',
+
+        'pf.kicker': 'Продуктовый портфель',
+        'pf.title': "35+ направлений.<br /><span class='text-steel'>Один ответственный партнёр.</span>",
+        'pf.lead': 'Консолидируем закупки сырья в одном контракте: меньше поставщиков, меньше рисков, единые стандарты качества и документооборота.',
+        'pf.p1t': 'Контроль качества',
+        'pf.p1d': 'Входной контроль каждой партии, сертификаты анализа (COA), паспорта безопасности (SDS) и арбитражные пробы. Соответствие ГОСТ, ТУ и международным фармакопеям.',
+        'pf.p2t': 'Логистика',
+        'pf.p2d': 'Мультимодальные маршруты, складские резервы и доставка до площадки клиента. Работаем с опасными грузами (ADR / IMDG) и температурным режимом.',
+        'pf.p3t': 'Прямые контракты',
+        'pf.p3d': 'Долгосрочные соглашения с мировыми производителями. Без цепочек посредников — с прогнозируемой ценой и приоритетом в распределении объёмов.',
+        'pf.p4t': 'ВЭД и документы',
+        'pf.p4d': 'Таможенное оформление, сертификация и регистрация продукции — берём на себя. Клиент получает сырьё с полным комплектом документов.',
+        'pf.processTitle': 'Цикл поставки',
+        'pf.more': '+ ещё 19 направлений',
+
+        'team.kicker': 'Команда и культура',
+        'team.title1': 'Главный реагент —',
+        'team.title2': 'люди.',
+        'team.lead': 'За каждой тонной сырья стоит работа более 100 профессионалов. Именно команда превращает сложные международные цепочки в предсказуемый сервис для клиента.',
+        'team.headcount': 'Численность',
+        'team.bigText': 'высококвалифицированных сотрудников в штате',
+        'team.careersKicker': 'Карьера в Юкон',
+        'team.careersTitle': 'Мы открыты к сильным специалистам.',
+        'team.careersText': 'Ищем менеджеров по продукту, специалистов ВЭД, логистов и химиков-технологов, которые хотят работать с масштабом и отвечать за результат.',
+        'team.careersCta': 'Отправить резюме',
+        'team.careersSubject': 'Резюме',
+
+        'ct.kicker': 'Контакты',
+        'ct.title': 'Обсудим вашу потребность в сырье.',
+        'ct.copy': 'Нажмите, чтобы скопировать',
+        'ct.responseL': 'Время ответа', 'ct.responseV': 'В течение рабочего дня',
+        'ct.formatL': 'Формат работы', 'ct.formatV': 'B2B · опт · долгосрочные контракты',
+        'ct.prepL': 'Для быстрого расчёта укажите',
+        'ct.prep1': 'наименование и CAS-номер', 'ct.prep2': 'требуемую спецификацию / марку', 'ct.prep3': 'объём и периодичность поставок', 'ct.prep4': 'город доставки',
+        'ct.online': 'Отдел продаж на связи',
+        'ct.formTitle': 'Заявка для B2B',
+        'ct.name': 'Имя *', 'ct.namePh': 'Как к вам обращаться',
+        'ct.company': 'Компания *', 'ct.companyPh': 'Название и ИНН',
+        'ct.email': 'E-mail *',
+        'ct.industry': 'Отрасль *', 'ct.select': 'Выберите отрасль', 'ct.other': 'Другое',
+        'ct.message': 'Сообщение', 'ct.messagePh': 'Продукт, CAS, объём, периодичность, город доставки',
+        'ct.consent': 'Отправляя заявку, вы соглашаетесь на обработку персональных данных в целях подготовки коммерческого предложения.',
+        'ct.submit': 'Отправить заявку',
+        'ct.success': 'Спасибо! Заявка сформирована — менеджер свяжется с вами в течение рабочего дня.',
+        'ct.error': 'Заполните обязательные поля',
+        'ct.specPrefill': 'Прошу направить спецификацию и коммерческое предложение на продукт: ',
+        'ct.mailSubject': 'Заявка с сайта',
+
+        'ft.about': 'Оптовая торговля и поставки химического сырья для промышленных предприятий.',
+        'ft.nav': 'Навигация', 'ft.contact': 'Связь', 'ft.top': 'Наверх',
+        'ft.legal': 'ООО «Юкон»', 'ft.rights': 'Все права защищены.',
+        'ft.offer': 'Информация на сайте не является публичной офертой',
+
+        'toast.copied': 'Скопировано',
+      },
+      en: {
+        'meta.title': 'UCON LLC — Chemical Raw Materials Supply',
+        'nav.scale': 'Scale', 'nav.industries': 'Industries', 'nav.portfolio': 'Portfolio', 'nav.team': 'Team', 'nav.contact': 'Contact',
+        'cta.request': 'Send a request',
+
+        'hero.meta1': 'Supply active · 2026',
+        'hero.meta2': '[00] B2B · Chemical raw materials · Wholesale',
+        'hero.badge': 'Wholesale supply for industry',
+        'hero.title1': 'Chemical raw materials',
+        'hero.title2': 'at industrial scale.',
+        'hero.lead': 'UCON keeps production lines running with reliable raw material supply — from specification to your warehouse. Direct contracts with manufacturers, complete documentation and logistics built for continuous operations.',
+        'hero.cta1': 'Request a specification',
+        'hero.cta2': 'Industries',
+        'hero.s1': 'tonnes per year', 'hero.s2': 'product lines', 'hero.s3': 'core industries', 'hero.s4': 'experts on the team',
+
+        'scale.kicker': 'Scale in numbers',
+        'scale.title': 'Volumes you can<br />build a plan on.',
+        'scale.lead': 'We design supply so your production planning never depends on market swings: steady monthly volumes, warehouse buffers and alternative chains for critical items.',
+        'bento.volume': 'Annual volume',
+        'bento.tonsTitle': 'tonnes of chemicals per year',
+        'bento.tonsText': 'Around 1,600 tonnes every month — steady shipments aligned with our clients’ production plans, with no seasonal gaps.',
+        'bento.jan': 'Jan', 'bento.dec': 'Dec', 'bento.avg': '≈ 1,600 t / mo',
+        'bento.portfolio': 'Portfolio',
+        'bento.catTitle': 'product lines',
+        'bento.catText': 'Surfactants, solvents, polymers, pigments, APIs, reagents — one procurement window instead of a dozen suppliers.',
+        'bento.geo': 'Geography',
+        'bento.geoTitle': 'Global producers → your warehouse',
+        'bento.geoText': 'Raw materials from Asia, Europe and the Middle East. Delivery across Russia and the EAEU — by sea, rail and road.',
+        'bento.team': 'Team',
+        'bento.teamText': 'specialists: product managers, foreign trade, logistics and quality control.',
+        'bento.sectors': 'Industries',
+        'bento.sectorsText': 'core industries — from agrochemistry to oil & gas.',
+        'bento.contracts': 'Contracts',
+        'bento.directTitle': 'Direct<br />contracts',
+        'bento.directText': 'We work directly with manufacturers: transparent pricing and full traceability for every batch.',
+
+        'ind.kicker': 'Industry solutions',
+        'ind.title': 'Five industries.<br />Five different standards.',
+        'ind.lead': 'Each industry has its own requirements for purity, documentation and logistics. We know them from the inside — and match raw materials to your process, not just to a SKU.',
+        'ind.agro': 'Agrochemistry', 'ind.cosm': 'Cosmetics & Personal Care', 'ind.pharma': 'Pharmaceuticals', 'ind.oil': 'Oil & Gas', 'ind.dyes': 'Dyes & Pigments',
+        'ind.materials': 'Key material groups',
+        'ind.focus': 'Focus',
+        'ind.cta': 'Request a quote',
+
+        'pf.kicker': 'Product portfolio',
+        'pf.title': "35+ product lines.<br /><span class='text-steel'>One accountable partner.</span>",
+        'pf.lead': 'We consolidate raw material procurement into a single contract: fewer suppliers, lower risk, unified quality and documentation standards.',
+        'pf.p1t': 'Quality control',
+        'pf.p1d': 'Incoming inspection of every batch, certificates of analysis (COA), safety data sheets (SDS) and retained samples. Compliance with GOST, TU and international pharmacopoeias.',
+        'pf.p2t': 'Logistics',
+        'pf.p2d': 'Multimodal routes, warehouse buffers and delivery to your site. We handle dangerous goods (ADR / IMDG) and temperature-controlled cargo.',
+        'pf.p3t': 'Direct contracts',
+        'pf.p3d': 'Long-term agreements with global manufacturers. No chains of intermediaries — predictable pricing and priority in volume allocation.',
+        'pf.p4t': 'Trade & compliance',
+        'pf.p4d': 'Customs clearance, certification and product registration — handled by us. You receive materials with a complete document set.',
+        'pf.processTitle': 'Supply cycle',
+        'pf.more': '+ 19 more lines',
+
+        'team.kicker': 'Team & culture',
+        'team.title1': 'Our key reagent is',
+        'team.title2': 'people.',
+        'team.lead': 'Behind every tonne we deliver are more than 100 professionals. It is our team that turns complex international supply chains into a predictable service for our clients.',
+        'team.headcount': 'Headcount',
+        'team.bigText': 'highly qualified employees on staff',
+        'team.careersKicker': 'Careers at UCON',
+        'team.careersTitle': 'We are open to strong professionals.',
+        'team.careersText': 'We are looking for product managers, foreign trade specialists, logisticians and process chemists who want to work at scale and own the result.',
+        'team.careersCta': 'Send your CV',
+        'team.careersSubject': 'CV',
+
+        'ct.kicker': 'Contact',
+        'ct.title': 'Let’s discuss your raw material needs.',
+        'ct.copy': 'Click to copy',
+        'ct.responseL': 'Response time', 'ct.responseV': 'Within one business day',
+        'ct.formatL': 'How we work', 'ct.formatV': 'B2B · wholesale · long-term contracts',
+        'ct.prepL': 'For a fast quote, include',
+        'ct.prep1': 'product name and CAS number', 'ct.prep2': 'required specification / grade', 'ct.prep3': 'volume and delivery frequency', 'ct.prep4': 'delivery city',
+        'ct.online': 'Sales team online',
+        'ct.formTitle': 'B2B request',
+        'ct.name': 'Name *', 'ct.namePh': 'How should we address you',
+        'ct.company': 'Company *', 'ct.companyPh': 'Company name and tax ID',
+        'ct.email': 'E-mail *',
+        'ct.industry': 'Industry *', 'ct.select': 'Select an industry', 'ct.other': 'Other',
+        'ct.message': 'Message', 'ct.messagePh': 'Product, CAS, volume, frequency, delivery city',
+        'ct.consent': 'By submitting this request you consent to the processing of your personal data for the purpose of preparing a commercial offer.',
+        'ct.submit': 'Submit request',
+        'ct.success': 'Thank you! Your request is ready — a manager will contact you within one business day.',
+        'ct.error': 'Please fill in the required fields',
+        'ct.specPrefill': 'Please send the specification and a commercial offer for: ',
+        'ct.mailSubject': 'Website request',
+
+        'ft.about': 'Wholesale trade and supply of chemical raw materials for industrial enterprises.',
+        'ft.nav': 'Navigation', 'ft.contact': 'Contact', 'ft.top': 'Back to top',
+        'ft.legal': 'UCON LLC', 'ft.rights': 'All rights reserved.',
+        'ft.offer': 'Information on this website does not constitute a public offer',
+
+        'toast.copied': 'Copied',
+      },
+    };
+
+    /* ---------------- Structured content ---------------- */
+    const INDUSTRIES = [
+      {
+        id: 'agro', icon: 'sprout', code: 'AGR', formula: 'N · P · K',
+        name: { ru: 'Агрохимия', en: 'Agrochemistry' },
+        short: { ru: 'Сырьё для СЗР, удобрений и адъювантов', en: 'Inputs for crop protection, fertilizers and adjuvants' },
+        text: {
+          ru: 'Производство средств защиты растений и удобрений требует строгого соблюдения сезонности. Мы формируем запасы заранее, чтобы действующие вещества и вспомогательные компоненты были на складе к старту сезона — с подтверждённой концентрацией и чистотой.',
+          en: 'Crop protection and fertilizer production is tied to tight seasonal windows. We build stock in advance so active ingredients and formulation components are in the warehouse before the season starts — with verified concentration and purity.',
+        },
+        focus: { ru: 'Сезонное планирование и резервирование объёмов', en: 'Seasonal planning and volume reservation' },
+        materials: {
+          ru: ['Действующие вещества (ДВ)', 'ПАВ и адъюванты', 'Растворители', 'Хелаты и микроэлементы', 'Минеральные соли'],
+          en: ['Active ingredients (AIs)', 'Surfactants & adjuvants', 'Solvents', 'Chelates & micronutrients', 'Mineral salts'],
+        },
+      },
+      {
+        id: 'cosmetics', icon: 'sparkles', code: 'CSM', formula: 'SLES · CAPB',
+        name: { ru: 'Косметика и бытовая химия', en: 'Cosmetics & Personal Care' },
+        short: { ru: 'ПАВ, эмолленты, загустители, консерванты', en: 'Surfactants, emollients, thickeners, preservatives' },
+        text: {
+          ru: 'Для косметики и бытовой химии важна стабильность от партии к партии: цвет, запах и вязкость готового продукта не должны меняться. Поставляем сырьё с повторяемыми характеристиками и документацией, необходимой для декларирования продукции.',
+          en: 'In cosmetics and household chemicals, batch-to-batch consistency is critical: colour, odour and viscosity of the finished product must not drift. We supply materials with repeatable properties and the documentation required for product declaration.',
+        },
+        focus: { ru: 'Стабильность характеристик от партии к партии', en: 'Batch-to-batch consistency' },
+        materials: {
+          ru: ['Анионные и амфотерные ПАВ', 'Эмолленты и масла', 'Загустители', 'Консерванты', 'Глицерин и гликоли'],
+          en: ['Anionic & amphoteric surfactants', 'Emollients & oils', 'Thickeners', 'Preservatives', 'Glycerin & glycols'],
+        },
+      },
+      {
+        id: 'pharma', icon: 'pill', code: 'PHM', formula: 'API · GMP',
+        name: { ru: 'Фармацевтика', en: 'Pharmaceuticals' },
+        short: { ru: 'Субстанции, вспомогательные вещества, растворители', en: 'APIs, excipients and solvents' },
+        text: {
+          ru: 'Фармацевтическое производство не допускает компромиссов. Работаем с производителями, имеющими GMP-сертификацию, обеспечиваем соответствие фармакопейным требованиям и полную прослеживаемость каждой партии — от завода до вашей площадки.',
+          en: 'Pharmaceutical manufacturing allows no compromise. We work with GMP-certified producers, ensure compliance with pharmacopoeia requirements and full traceability of every batch — from the plant to your site.',
+        },
+        focus: { ru: 'Фармакопейное качество и прослеживаемость', en: 'Pharmacopoeia grade and traceability' },
+        materials: {
+          ru: ['Фармацевтические субстанции', 'Интермедиаты', 'Вспомогательные вещества', 'Растворители USP / Ph. Eur.', 'Соли и буферы'],
+          en: ['Active pharmaceutical ingredients', 'Intermediates', 'Excipients', 'USP / Ph. Eur. solvents', 'Salts & buffers'],
+        },
+      },
+      {
+        id: 'oilgas', icon: 'droplets', code: 'OGS', formula: 'C₂H₆O₂',
+        name: { ru: 'Нефтегазовая отрасль', en: 'Oil & Gas' },
+        short: { ru: 'Реагенты для добычи, бурения и подготовки нефти', en: 'Reagents for production, drilling and oil treatment' },
+        text: {
+          ru: 'Нефтегазовые компании и сервисные подрядчики работают в режиме непрерывных операций, часто — в удалённых регионах. Поставляем реагенты крупными партиями с логистикой до месторождений и баз, учитывая требования к опасным грузам и климатическим условиям.',
+          en: 'Oil & gas operators and service contractors run continuous operations, often in remote regions. We supply reagents in bulk with logistics to fields and bases, meeting dangerous goods requirements and harsh climate conditions.',
+        },
+        focus: { ru: 'Крупные партии и доставка в удалённые регионы', en: 'Bulk lots and delivery to remote regions' },
+        materials: {
+          ru: ['Ингибиторы коррозии', 'Деэмульгаторы', 'Реагенты для буровых растворов', 'Гликоли и метанол', 'Кислоты для обработки скважин'],
+          en: ['Corrosion inhibitors', 'Demulsifiers', 'Drilling fluid chemicals', 'Glycols & methanol', 'Well stimulation acids'],
+        },
+      },
+      {
+        id: 'dyes', icon: 'palette', code: 'DYE', formula: 'TiO₂ · Fe₂O₃',
+        name: { ru: 'Красители и пигменты', en: 'Dyes & Pigments' },
+        short: { ru: 'Пигменты, связующие, диспергаторы', en: 'Pigments, binders and dispersants' },
+        text: {
+          ru: 'Для производителей ЛКМ, полимеров, полиграфических красок и текстиля решающее значение имеют оттенок, укрывистость и дисперсность. Подбираем пигменты и компоненты под рецептуру клиента и поддерживаем образцы для лабораторного согласования.',
+          en: 'For paint, polymer, printing ink and textile producers, shade, hiding power and particle size are decisive. We match pigments and components to your formulation and provide samples for lab approval.',
+        },
+        focus: { ru: 'Точное соответствие рецептуре и оттенку', en: 'Exact match to formulation and shade' },
+        materials: {
+          ru: ['Диоксид титана', 'Органические пигменты', 'Железооксидные пигменты', 'Диспергаторы', 'Связующие и смолы'],
+          en: ['Titanium dioxide', 'Organic pigments', 'Iron oxide pigments', 'Dispersants', 'Binders & resins'],
+        },
+      },
+    ];
+
+    const CATEGORIES = {
+      ru: ['Поверхностно-активные вещества', 'Растворители', 'Кислоты и щёлочи', 'Гликоли и спирты', 'Полимеры и смолы', 'Диоксид титана', 'Органические пигменты', 'Амины', 'Сложные эфиры', 'Пластификаторы', 'Антиоксиданты', 'Консерванты', 'Загустители', 'Минеральные соли', 'Хелаты', 'Ингибиторы коррозии'],
+      en: ['Surfactants', 'Solvents', 'Acids & alkalis', 'Glycols & alcohols', 'Polymers & resins', 'Titanium dioxide', 'Organic pigments', 'Amines', 'Esters', 'Plasticizers', 'Antioxidants', 'Preservatives', 'Thickeners', 'Mineral salts', 'Chelates', 'Corrosion inhibitors'],
+    };
+
+    const PROCESS = [
+      { ru: ['Запрос', 'Принимаем потребность: продукт, CAS, марка, объём, график.'], en: ['Request', 'We capture your need: product, CAS, grade, volume, schedule.'] },
+      { ru: ['Спецификация', 'Подбираем производителя, направляем COA, SDS и образцы.'], en: ['Specification', 'We select a producer and share COA, SDS and samples.'] },
+      { ru: ['Контракт', 'Фиксируем цену, условия поставки и график отгрузок.'], en: ['Contract', 'We lock in price, delivery terms and shipment schedule.'] },
+      { ru: ['Поставка', 'Таможня, логистика и контроль качества — на нашей стороне.'], en: ['Delivery', 'Customs, logistics and quality control — on our side.'] },
+      { ru: ['Сопровождение', 'Персональный менеджер, повторные отгрузки, отчётность.'], en: ['Account care', 'Dedicated manager, repeat shipments, reporting.'] },
+    ];
+
+    const ROLES = [
+      { icon: 'boxes', ru: ['Продуктовые менеджеры', 'Отраслевые эксперты, которые говорят с технологами клиента на одном языке.'], en: ['Product managers', 'Industry experts who speak the same language as your process engineers.'] },
+      { icon: 'globe', ru: ['ВЭД и таможня', 'Контракты с зарубежными заводами, валютный контроль и таможенное оформление.'], en: ['Foreign trade & customs', 'Contracts with foreign plants, currency control and customs clearance.'] },
+      { icon: 'route', ru: ['Логистика', 'Маршруты, склады и доставка опасных грузов — по графику, а не «как получится».'], en: ['Logistics', 'Routes, warehouses and dangerous goods delivery — on schedule, not by chance.'] },
+      { icon: 'flask-conical', ru: ['Качество и регуляторика', 'Химики и специалисты по сертификации, отвечающие за соответствие каждой партии.'], en: ['Quality & regulatory', 'Chemists and certification specialists accountable for every batch.'] },
+    ];
+
+    const VALUES = [
+      { n: 'V.01', ru: ['Стабильность', 'Долгосрочная занятость, прозрачная система мотивации и уверенность в завтрашнем дне.'], en: ['Stability', 'Long-term employment, a transparent incentive system and confidence in tomorrow.'] },
+      { n: 'V.02', ru: ['Экспертиза', 'Внутреннее обучение, наставничество и доступ к опыту ведущих мировых производителей.'], en: ['Expertise', 'In-house training, mentoring and exposure to leading global manufacturers.'] },
+      { n: 'V.03', ru: ['Открытость', 'Короткая дистанция до руководства, честная обратная связь, решения без бюрократии.'], en: ['Openness', 'Short distance to leadership, honest feedback, decisions without red tape.'] },
+      { n: 'V.04', ru: ['Рост', 'Карьерные траектории от специалиста до руководителя направления внутри компании.'], en: ['Growth', 'Career paths from specialist to head of a business line within the company.'] },
+    ];
+
+    const MARQUEE = ['Agrochemistry', 'Cosmetics', 'Pharmaceuticals', 'Oil & Gas', 'Dyes & Pigments', 'CAS 56-81-5', 'TiO₂', 'SLES 70%', 'MEG', 'ADR / IMDG', 'COA · SDS', 'FCA · CPT · DAP'];
+
+    /* ---------------- State & helpers ---------------- */
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+    const store = {
+      get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+      set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } },
+    };
+    let lang = store.get('ucon.lang') === 'en' ? 'en' : 'ru';
+    let activeInd = 0;
+    const t = (k) => (I18N[lang] && I18N[lang][k]) ?? I18N.ru[k] ?? k;
+    const icons = () => window.lucide && window.lucide.createIcons();
+    const fmt = (n) => n.toLocaleString(lang === 'ru' ? 'ru-RU' : 'en-US').replace(/ | /g, lang === 'ru' ? ' ' : ',');
+
+    /* ---------------- Renderers ---------------- */
+    function renderIndustries(animatePanel = false) {
+      const list = $('#indList');
+      list.innerHTML = INDUSTRIES.map((ind, i) => `
+        <button type="button" role="tab" aria-selected="${i === activeInd}" data-ind="${i}"
+          class="ind-row ${i === activeInd ? 'active' : ''} group relative flex w-full items-center gap-5 border-b hairline px-6 py-7 text-left last:border-b-0 md:gap-8 md:px-10 md:py-9">
+          <span class="ind-bar absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-cobalt via-cobalt-soft to-emer"></span>
+          <span class="font-mono text-sm text-steel-dim">0${i + 1}</span>
+          <span class="grid h-11 w-11 shrink-0 place-items-center border hairline-strong ${i === activeInd ? 'border-cobalt bg-cobalt/10' : ''} transition-colors">
+            <i data-lucide="${ind.icon}" class="h-5 w-5 ${i === activeInd ? 'text-white' : 'text-steel'}"></i>
+          </span>
+          <span class="min-w-0 flex-1">
+            <span class="block font-display text-xl font-medium md:text-[28px] md:leading-tight ${i === activeInd ? 'text-white' : 'text-steel-light'} transition-colors group-hover:text-white">${ind.name[lang]}</span>
+            <span class="mt-1 block truncate text-sm text-steel-dim">${ind.short[lang]}</span>
+          </span>
+          <span class="hidden font-mono text-[11px] tracking-[0.14em] text-steel-dim md:inline">${ind.code}</span>
+          <i data-lucide="arrow-right" class="ind-arrow h-5 w-5 shrink-0 text-steel-dim"></i>
+        </button>`).join('');
+      renderPanel(animatePanel);
+    }
+
+    function renderPanel(animate = true) {
+      const ind = INDUSTRIES[activeInd];
+      const panel = $('#indPanel');
+      panel.innerHTML = `
+        <div class="${animate ? 'ind-panel-enter' : ''}">
+          <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cobalt/20 blur-[90px]"></div>
+          <div class="relative flex items-start justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">${ind.code}-0${activeInd + 1}</span>
+            <span class="font-mono text-[11px] tracking-[0.1em] text-emer">${ind.formula}</span>
+          </div>
+          <div class="relative mt-10 font-mono text-[96px] font-medium leading-none tracking-tighter text-white/[0.06] md:text-[140px]">0${activeInd + 1}</div>
+          <h3 class="relative -mt-8 font-display text-3xl font-medium leading-tight md:-mt-12 md:text-4xl">${ind.name[lang]}</h3>
+          <p class="relative mt-5 leading-relaxed text-steel">${ind.text[lang]}</p>
+          <div class="relative mt-8 border-t hairline pt-6">
+            <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">${t('ind.focus')}</div>
+            <div class="mt-2 flex items-center gap-2 text-white"><i data-lucide="target" class="h-4 w-4 text-cobalt-soft"></i>${ind.focus[lang]}</div>
+          </div>
+          <div class="relative mt-6">
+            <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-steel-dim">${t('ind.materials')}</div>
+            <ul class="mt-3 flex flex-wrap gap-2">
+              ${ind.materials[lang].map((m) => `<li class="border hairline-strong bg-white/[0.02] px-3 py-1.5 font-mono text-[12px] text-steel-light">${m}</li>`).join('')}
+            </ul>
+          </div>
+          <a href="#contact" data-prefill-industry="${ind.id}" class="relative mt-10 inline-flex items-center gap-3 border-b border-cobalt pb-1 text-sm font-medium text-white transition-colors hover:text-cobalt-soft">
+            ${t('ind.cta')} <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+          </a>
+        </div>`;
+      icons();
+    }
+
+    function renderStatic() {
+      $('#catTags').innerHTML = CATEGORIES[lang].map((c, i) =>
+        `<span class="group inline-flex items-center gap-2 border hairline-strong px-4 py-2.5 text-sm text-steel-light transition-all duration-300 hover:-translate-y-0.5 hover:border-cobalt hover:bg-cobalt/10 hover:text-white">
+          <span class="font-mono text-[10px] text-steel-dim group-hover:text-cobalt-soft">${String(i + 1).padStart(2, '0')}</span>${c}</span>`).join('') +
+        `<span class="inline-flex items-center border border-dashed border-cobalt/50 px-4 py-2.5 font-mono text-[12px] uppercase tracking-[0.12em] text-cobalt-soft">${t('pf.more')}</span>`;
+
+      $('#process').innerHTML = PROCESS.map((p, i) => `
+        <li class="spot group relative border-b hairline p-6 sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:last:border-r-0 md:p-8">
+          <div class="flex items-center gap-3">
+            <span class="grid h-8 w-8 place-items-center rounded-full border hairline-strong font-mono text-[11px] text-steel transition-colors group-hover:border-emer group-hover:text-emer">${i + 1}</span>
+            <span class="h-px flex-1 bg-gradient-to-r from-white/15 to-transparent"></span>
+          </div>
+          <h4 class="mt-6 font-display text-lg font-medium">${p[lang][0]}</h4>
+          <p class="mt-2 text-sm leading-relaxed text-steel">${p[lang][1]}</p>
+        </li>`).join('');
+
+      $('#roles').innerHTML = ROLES.map((r, i) => `
+        <article class="spot group bg-ink p-7 md:p-8">
+          <div class="flex items-center justify-between">
+            <i data-lucide="${r.icon}" class="h-6 w-6 text-steel transition-colors group-hover:text-cobalt-soft"></i>
+            <span class="font-mono text-[11px] text-steel-dim">T.0${i + 1}</span>
+          </div>
+          <h3 class="mt-10 font-display text-xl font-medium">${r[lang][0]}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-steel">${r[lang][1]}</p>
+        </article>`).join('');
+
+      $('#values').innerHTML = VALUES.map((v) => `
+        <article class="spot group bg-ink p-7 md:p-8">
+          <span class="font-mono text-[11px] text-emer">${v.n}</span>
+          <h3 class="mt-6 font-display text-2xl font-medium">${v[lang][0]}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-steel">${v[lang][1]}</p>
+        </article>`).join('');
+    }
+
+    function renderOnce() {
+      // Marquee
+      const items = MARQUEE.map((m) => `<span class="flex items-center gap-12">${m}<span class="text-cobalt">◆</span></span>`).join('');
+      $('#marqueeTrack').innerHTML = items + items;
+
+      // Monthly bars
+      const vals = [0.86, 0.92, 1.0, 0.96, 1.04, 0.98, 1.02, 0.95, 1.06, 1.0, 0.97, 1.08];
+      $('#bars').innerHTML = vals.map((v, i) =>
+        `<div class="bar flex-1 ${i === 11 ? 'bg-gradient-to-t from-cobalt to-emer' : 'bg-gradient-to-t from-cobalt/40 to-cobalt/80'}" style="height:${v * 82}%;transition-delay:${i * 60}ms"></div>`).join('');
+
+      // Dot map
+      const g = $('#dotmap');
+      let dots = '';
+      for (let y = 8; y < 120; y += 8) {
+        for (let x = 8; x < 320; x += 8) {
+          const nx = x / 320, ny = y / 120;
+          const v = Math.sin(nx * 9.1) * Math.cos(ny * 5.3) + Math.sin(nx * 3.7 + ny * 4.1);
+          if (v > 0.25) dots += `<circle cx="${x}" cy="${y}" r="1.1"/>`;
+        }
+      }
+      g.innerHTML = dots;
+
+      // People grid
+      $('#peopleGrid').innerHTML = Array.from({ length: 100 }, (_, i) =>
+        `<span class="aspect-square rounded-full ${i % 17 === 0 ? 'bg-emer shadow-[0_0_8px_#10B981]' : i % 7 === 0 ? 'bg-cobalt' : 'bg-white/15'}"></span>`).join('');
+    }
+
+    /* ---------------- i18n apply ---------------- */
+    function applyLang(next, animate = true) {
+      lang = next;
+      store.set('ucon.lang', lang);
+      const swap = () => {
+        document.documentElement.lang = lang;
+        document.title = t('meta.title');
+        $$('[data-i18n]').forEach((el) => {
+          const key = el.getAttribute('data-i18n');
+          if (I18N[lang][key] !== undefined) el.innerHTML = I18N[lang][key];
+        });
+        $$('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.getAttribute('data-i18n-ph')); });
+        $$('.lang-btn').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+        $('#careersLink').href = `mailto:${EMAIL}?subject=${encodeURIComponent(t('team.careersSubject'))}`;
+        $('#toastText').textContent = t('toast.copied');
+        renderIndustries();
+        renderStatic();
+        $$('[data-count]').forEach((el) => { if (el.dataset.done) el.textContent = fmt(+el.dataset.count); });
+        icons();
+        bindSpot();
+      };
+      if (!animate) return swap();
+      document.body.classList.add('i18n-swapping');
+      setTimeout(() => { swap(); requestAnimationFrame(() => document.body.classList.remove('i18n-swapping')); }, 160);
+    }
+
+    /* ---------------- Interactions ---------------- */
+    function bindSpot() {
+      $$('.spot').forEach((el) => {
+        if (el.dataset.spot) return;
+        el.dataset.spot = '1';
+        el.addEventListener('pointermove', (e) => {
+          const r = el.getBoundingClientRect();
+          el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+          el.style.setProperty('--my', `${e.clientY - r.top}px`);
+        });
+      });
+    }
+
+    let toastTimer;
+    function toast(msg) {
+      const el = $('#toast');
+      $('#toastText').textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+    }
+
+    async function copyEmail() {
+      try {
+        await navigator.clipboard.writeText(EMAIL);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = EMAIL; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (_) { /* ignore */ }
+        ta.remove();
+      }
+      toast(t('toast.copied'));
+    }
+
+    function countUp(el) {
+      const target = +el.dataset.count;
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const dur = reduce ? 0 : 1800;
+      const start = performance.now();
+      const step = (now) => {
+        const p = dur ? Math.min(1, (now - start) / dur) : 1;
+        const eased = 1 - Math.pow(1 - p, 4);
+        el.textContent = fmt(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(step); else el.dataset.done = '1';
+      };
+      requestAnimationFrame(step);
+    }
+
+    function initObservers() {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('in');
+          $$('[data-count]', e.target).forEach((c) => { if (!c.dataset.started) { c.dataset.started = '1'; countUp(c); } });
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      $$('.reveal').forEach((el) => io.observe(el));
+    }
+
+    function initHeader() {
+      const header = $('#header');
+      const onScroll = () => {
+        header.classList.toggle('shadow-[0_10px_40px_-20px_rgba(0,0,0,.8)]', window.scrollY > 20);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Active nav link
+      const links = $$('.nav-link');
+      const sections = links.map((l) => $(l.getAttribute('href')));
+      const spy = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          links.forEach((l) => l.classList.toggle('text-white', l.getAttribute('href') === `#${e.target.id}`));
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      sections.forEach((s) => s && spy.observe(s));
+
+      // Mobile menu
+      const btn = $('#menuBtn'), menu = $('#mobileMenu');
+      const setOpen = (open) => {
+        menu.classList.toggle('hidden', !open);
+        btn.setAttribute('aria-expanded', String(open));
+        btn.innerHTML = `<i data-lucide="${open ? 'x' : 'menu'}" class="h-5 w-5"></i>`;
+        icons();
+      };
+      btn.addEventListener('click', () => setOpen(menu.classList.contains('hidden')));
+      $$('.m-link').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    }
+
+    function initForm() {
+      const form = $('#leadForm');
+      const status = $('#formStatus');
+      const indSelect = form.elements.industry;
+      const msg = form.elements.message;
+
+      // Prefill from CTAs
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest('[data-prefill], [data-prefill-industry]');
+        if (!a) return;
+        if (a.dataset.prefillIndustry) indSelect.value = a.dataset.prefillIndustry;
+        if (a.dataset.prefill === 'spec' && !msg.value) msg.value = t('ct.specPrefill');
+        setTimeout(() => form.elements.name.focus({ preventScroll: true }), 700);
+      });
+
+      form.addEventListener('input', (e) => e.target.classList.remove('invalid'));
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let ok = true;
+        ['name', 'company', 'email', 'industry'].forEach((n) => {
+          const f = form.elements[n];
+          const valid = f.value.trim() && (n !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value.trim()));
+          f.classList.toggle('invalid', !valid);
+          if (!valid) ok = false;
+        });
+        if (!ok) { toast(t('ct.error')); return; }
+
+        const data = Object.fromEntries(new FormData(form));
+        data.industryLabel = indSelect.options[indSelect.selectedIndex].text;
+        data.lang = lang;
+
+        if (FORM_ENDPOINT) {
+          try {
+            await fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+          } catch (err) { /* network errors fall through to the success message; wire real handling to your backend */ }
+        } else {
+          const body = [
+            `${t('ct.name').replace(' *', '')}: ${data.name}`,
+            `${t('ct.company').replace(' *', '')}: ${data.company}`,
+            `E-mail: ${data.email}`,
+            `${t('ct.industry').replace(' *', '')}: ${data.industryLabel}`,
+            '',
+            data.message || '',
+          ].join('\n');
+          window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`${t('ct.mailSubject')} — ${data.company}`)}&body=${encodeURIComponent(body)}`;
+        }
+        status.classList.remove('hidden');
+        status.classList.add('flex');
+        form.reset();
+      });
+    }
+
+    /* ---------------- Molecular canvas ---------------- */
+    function initMolecules() {
+      const canvas = $('#molecules');
+      const ctx = canvas.getContext('2d');
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let w, h, dpr, molecules = [], mouse = { x: 0.5, y: 0.5 }, raf;
+
+      const BOND = 'rgba(148, 163, 184, ';
+      function makeMolecule(cx, cy, scale) {
+        // Hexagonal ring with branching substituents
+        const atoms = [], bonds = [];
+        const r = 26 * scale;
+        for (let i = 0; i < 6; i++) {
+          const a = Math.PI / 6 + (i * Math.PI) / 3;
+          atoms.push({ x: Math.cos(a) * r, y: Math.sin(a) * r, s: 2.2 * scale, c: 0 });
+        }
+        for (let i = 0; i < 6; i++) bonds.push([i, (i + 1) % 6, i % 2 === 0]);
+        const subs = 1 + Math.floor(Math.random() * 3);
+        for (let k = 0; k < subs; k++) {
+          const i = Math.floor(Math.random() * 6);
+          const a = Math.PI / 6 + (i * Math.PI) / 3;
+          const idx = atoms.length;
+          const kind = Math.random();
+          atoms.push({ x: Math.cos(a) * r * 2, y: Math.sin(a) * r * 2, s: 3.2 * scale, c: kind > 0.6 ? 2 : 1 });
+          bonds.push([i, idx, false]);
+          if (Math.random() > 0.5) {
+            const a2 = a + (Math.random() > 0.5 ? 0.6 : -0.6);
+            atoms.push({ x: Math.cos(a) * r * 2 + Math.cos(a2) * r, y: Math.sin(a) * r * 2 + Math.sin(a2) * r, s: 2 * scale, c: 0 });
+            bonds.push([idx, atoms.length - 1, false]);
+          }
+        }
+        return {
+          cx, cy, atoms, bonds,
+          rot: Math.random() * Math.PI * 2,
+          vr: (Math.random() - 0.5) * 0.0016,
+          vx: (Math.random() - 0.5) * 0.08, vy: (Math.random() - 0.5) * 0.08,
+          depth: 0.3 + Math.random() * 0.7,
+          alpha: 0.25 + Math.random() * 0.45,
+        };
+      }
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = w < 640 ? 6 : w < 1100 ? 10 : 14;
+        molecules = Array.from({ length: count }, () => {
+          // bias toward the right half to keep headline legible
+          const x = w * (0.35 + Math.random() * 0.7);
+          const y = h * Math.random();
+          return makeMolecule(x, y, 0.7 + Math.random() * 1.1);
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        const px = (mouse.x - 0.5) * 30, py = (mouse.y - 0.5) * 30;
+        // inter-molecule links
+        for (let i = 0; i < molecules.length; i++) {
+          for (let j = i + 1; j < molecules.length; j++) {
+            const a = molecules[i], b = molecules[j];
+            const dx = a.cx - b.cx, dy = a.cy - b.cy, d = Math.hypot(dx, dy);
+            if (d < 260) {
+              ctx.strokeStyle = `rgba(37, 99, 235, ${0.12 * (1 - d / 260)})`;
+              ctx.setLineDash([2, 5]);
+              ctx.beginPath();
+              ctx.moveTo(a.cx + px * a.depth, a.cy + py * a.depth);
+              ctx.lineTo(b.cx + px * b.depth, b.cy + py * b.depth);
+              ctx.stroke();
+              ctx.setLineDash([]);
+            }
+          }
+        }
+        for (const m of molecules) {
+          if (!reduce) {
+            m.rot += m.vr; m.cx += m.vx; m.cy += m.vy;
+            if (m.cx < -80) m.cx = w + 80; if (m.cx > w + 80) m.cx = -80;
+            if (m.cy < -80) m.cy = h + 80; if (m.cy > h + 80) m.cy = -80;
+          }
+          const cos = Math.cos(m.rot), sin = Math.sin(m.rot);
+          const ox = m.cx + px * m.depth, oy = m.cy + py * m.depth;
+          const pts = m.atoms.map((p) => ({ x: ox + p.x * cos - p.y * sin, y: oy + p.x * sin + p.y * cos, s: p.s, c: p.c }));
+          ctx.lineWidth = 1;
+          for (const [i, j, dbl] of m.bonds) {
+            ctx.strokeStyle = BOND + (m.alpha * 0.55) + ')';
+            ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke();
+            if (dbl) {
+              const mx = (pts[i].x + pts[j].x) / 2 - ox, my = (pts[i].y + pts[j].y) / 2 - oy;
+              const k = 0.82;
+              ctx.strokeStyle = BOND + (m.alpha * 0.3) + ')';
+              ctx.beginPath();
+              ctx.moveTo(ox + (pts[i].x - ox) * k + mx * 0.0, oy + (pts[i].y - oy) * k);
+              ctx.lineTo(ox + (pts[j].x - ox) * k, oy + (pts[j].y - oy) * k);
+              ctx.stroke();
+            }
+          }
+          for (const p of pts) {
+            const col = p.c === 2 ? '16, 185, 129' : p.c === 1 ? '59, 130, 246' : '226, 232, 240';
+            if (p.c) {
+              const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.s * 6);
+              g.addColorStop(0, `rgba(${col}, ${m.alpha * 0.5})`);
+              g.addColorStop(1, `rgba(${col}, 0)`);
+              ctx.fillStyle = g;
+              ctx.beginPath(); ctx.arc(p.x, p.y, p.s * 6, 0, Math.PI * 2); ctx.fill();
+            }
+            ctx.fillStyle = `rgba(${col}, ${Math.min(1, m.alpha + 0.2)})`;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2); ctx.fill();
+          }
+        }
+        if (!reduce) raf = requestAnimationFrame(draw);
+      }
+
+      resize(); draw();
+      let rt;
+      window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { cancelAnimationFrame(raf); resize(); draw(); }, 150); });
+      window.addEventListener('pointermove', (e) => { mouse.x = e.clientX / window.innerWidth; mouse.y = e.clientY / window.innerHeight; }, { passive: true });
+      // Pause when hero is offscreen
+      new IntersectionObserver(([e]) => {
+        if (reduce) return;
+        cancelAnimationFrame(raf);
+        if (e.isIntersecting) raf = requestAnimationFrame(draw);
+      }).observe(canvas);
+    }
+
+    /* ---------------- Boot ---------------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      $('#year').textContent = new Date().getFullYear();
+      renderOnce();
+      applyLang(lang, false);
+      initObservers();
+      initHeader();
+      initForm();
+      initMolecules();
+
+      $$('.lang-btn').forEach((b) => b.addEventListener('click', () => { if (b.dataset.lang !== lang) applyLang(b.dataset.lang); }));
+      $('#copyEmail').addEventListener('click', copyEmail);
+      $$('.copy-email').forEach((b) => b.addEventListener('click', copyEmail));
+
+      $('#indList').addEventListener('click', (e) => {
+        const row = e.target.closest('[data-ind]');
+        if (!row) return;
+        const i = +row.dataset.ind;
+        if (i === activeInd) return;
+        activeInd = i;
+        $$('[data-ind]').forEach((r) => {
+          const on = +r.dataset.ind === i;
+          r.classList.toggle('active', on);
+          r.setAttribute('aria-selected', String(on));
+        });
+        renderIndustries(true);
+        if (window.innerWidth < 1024) $('#indPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
